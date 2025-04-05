@@ -1,0 +1,45 @@
+<div class="car-list-container">
+  <!-- Tiêu đề và nút thêm xe -->
+  <div class="header">
+    <h2>Danh sách Xe</h2>
+    <button class="btn-add" routerLink="/admin/car/create">+ Thêm xe</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tên xe</th>
+        <th>Dòng xe</th>
+        <th>Giá</th>
+        <th>Năm sản xuất</th>
+        <th>Số ghế</th>
+        <th>Ảnh</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let car of cars">
+        <td>{{ car.name }}</td>
+        <td>{{ car.modelLine?.name }}</td>
+        <td>{{ car.price | currency }}</td>
+        <td>{{ car.year }}</td>
+        <td>{{ car.seatCount }}</td>
+        <td>
+          <img
+            [src]="'http://localhost:5000/uploads/' + car.image"
+            alt="Car"
+            width="80"
+          />
+        </td>
+        <td class="actions">
+          <button class="btn-edit" [routerLink]="['/admin/car/edit', car._id]">
+            Sửa
+          </button>
+          <button class="btn-delete" (click)="deleteCar(car._id)">
+            Xoá
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

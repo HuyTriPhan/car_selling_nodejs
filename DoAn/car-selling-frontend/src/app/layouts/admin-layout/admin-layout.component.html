@@ -1,0 +1,72 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar" [ngClass]="{ 'collapsed': isSidebarCollapsed }">
+    <div class="sidebar-logo">
+      <span class="brand-text" *ngIf="!isSidebarCollapsed">Trang Admin</span>
+    </div>
+
+    <ul class="sidebar-nav">
+      <li>
+        <a routerLink="/admin">
+          <i class="ti ti-dashboard"></i>
+          <span *ngIf="!isSidebarCollapsed">Dashboard</span>
+        </a>
+      </li>
+      <li class="caption" *ngIf="!isSidebarCollapsed">Pages</li>
+      <!-- Nút quản lý người dùng -->
+      <li>
+        <a routerLink="/admin/user" routerLinkActive="active">
+          <i class="ti ti-user"></i>
+          <span *ngIf="!isSidebarCollapsed">Quản lý người dùng</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/car" routerLinkActive="active">
+          <i class="ti ti-car"></i>
+          <span *ngIf="!isSidebarCollapsed">Quản lý xe</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/admin/modelline" routerLinkActive="active">
+          <i class="ti ti-car"></i>
+          <span *ngIf="!isSidebarCollapsed">Quản lý dòng xe</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="sidebar-toggle" (click)="toggleSidebar()">
+      <i class="ti ti-chevrons-left"></i>
+    </div>
+  </aside>
+
+  <!-- Main layout -->
+  <div class="main-layout" [ngClass]="{ 'expanded': isSidebarCollapsed }">
+    <!-- Topbar -->
+    <header class="topbar">
+      <div class="search-box">
+        <input type="text" placeholder="Tìm kiếm..." />
+      </div>
+      <div class="topbar-right">
+        <i class="ti ti-bell"></i>
+        <i class="ti ti-mail"></i>
+        <div class="user-info">
+          <span class="username">{{ user?.name || 'Admin' }}</span>
+        </div>
+        <button class="logout-btn" (click)="logout()">
+          <i class="ti ti-logout"></i> <span>Đăng xuất</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <span>Trang chủ</span> / <span>Quản trị</span>
+    </div>
+
+    <!-- Nội dung chính -->
+    <main class="main-content">
+      <!-- Sử dụng router-outlet để render các component con -->
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

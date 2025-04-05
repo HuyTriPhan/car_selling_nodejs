@@ -1,0 +1,28 @@
+<div class="auth-container">
+  <h2>Đăng nhập</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <input type="email" formControlName="email" placeholder="Email" />
+    <div class="error" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+      <small *ngIf="loginForm.get('email')?.errors?.['required']">Vui lòng nhập email</small>
+      <small *ngIf="loginForm.get('email')?.errors?.['email']">Email không hợp lệ</small>
+    </div>
+
+    <div class="password-wrapper">
+      <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Mật khẩu" />
+      <i class="toggle-password" (click)="togglePassword()">👁</i>
+    </div>
+    <div class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+      <small>Vui lòng nhập mật khẩu</small>
+    </div>
+
+    <div class="auth-options">
+      <a href="#">Quên mật khẩu?</a>
+    </div>
+
+    <button type="submit" class="btn btn-login">Đăng nhập</button>
+  </form>
+
+  <p class="switch-text">Chưa có tài khoản?</p>
+  <a class="btn btn-outline" routerLink="/register">Đăng ký tài khoản</a>
+</div>

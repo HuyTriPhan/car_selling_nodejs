@@ -1,0 +1,89 @@
+.checkout-container {
+    max-width: 600px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  
+    h2 {
+      margin-bottom: 2rem;
+      font-weight: bold;
+    }
+  
+    .form-group {
+      margin-bottom: 1.2rem;
+  
+      label {
+        font-weight: 600;
+      }
+  
+      input, select {
+        width: 100%;
+        padding: 0.6rem;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+    }
+  
+    .summary {
+      margin-top: 2rem;
+  
+      button {
+        padding: 0.75rem 2rem;
+        font-size: 1rem;
+      }
+    }
+    .payment-methods {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem; /* Khoảng cách giữa các thẻ */
+      margin-top: 0.5rem;
+    }
+    
+    .payment-card {
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .payment-card input[type="radio"] {
+      /* Ẩn radio gốc */
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .payment-content {
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px 16px;
+      transition: 0.3s;
+    }
+    
+    .payment-content img {
+      width: 40px;
+      height: auto;
+      margin-right: 8px;
+    }
+    
+    .payment-card input[type="radio"]:checked ~ .payment-content {
+      border-color: #007bff;
+      background: #e7f1ff;
+    }
+
+    .summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 2rem;
+    }
+    
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+    }
+    
+  }
+  

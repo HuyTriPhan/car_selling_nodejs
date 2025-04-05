@@ -1,0 +1,146 @@
+
+<meta charset="utf-8">
+<title>ROYAL CARS - Car Rental HTML Template</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<meta content="Free HTML Templates" name="keywords">
+<meta content="Free HTML Templates" name="description">
+
+<!-- Favicon -->
+<link href="img/favicon.ico" rel="icon">
+
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rubik&display=swap" rel="stylesheet"> 
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header">
+    <h1 class="display-3 text-uppercase text-white mb-3">Car Listing</h1>
+    <div class="d-inline-flex text-white">
+        <h6 class="text-uppercase m-0"><a class="text-white" href="">Home</a></h6>
+        <h6 class="text-body m-0 px-3">/</h6>
+        <h6 class="text-uppercase text-body m-0">Car Listing</h6>
+    </div>
+</div>
+<!-- Page Header Start -->
+
+<!-- Rent A Car Start -->
+<div class="container-fluid py-5">
+  <div class="container pt-5 pb-3">
+    <div *ngIf="filteredCars.length === 0" class="text-center">
+      <p>Không có xe nào phù hợp với tìm kiếm của bạn.</p>
+    </div>
+    <div class="row">
+      <!-- Sử dụng slice pipe để chỉ hiển thị từ 0 đến displayedItems -->
+      <div class="col-lg-4 col-md-6 mb-2" *ngFor="let car of filteredCars | slice:0:displayedItems">
+        <div class="rent-item mb-4">
+          <!-- Ảnh xe lấy từ backend -->
+          <img
+            class="img-fluid mb-4"
+            [src]="'http://localhost:5000/uploads/' + car.image"
+            alt="{{ car.name }}"
+          />
+          <!-- Tên xe -->
+          <h4 class="text-uppercase mb-4">{{ car.name }}</h4>
+
+          <!-- Một số thông tin xe (năm, modelLine, mileage, v.v.) -->
+          <div class="d-flex justify-content-center mb-4">
+            <div class="px-2">
+              <i class="fa fa-car text-primary mr-1"></i>
+              <span>{{ car.year }}</span>
+            </div>
+            <div class="px-2 border-left border-right">
+              <i class="fa fa-cogs text-primary mr-1"></i>
+              <span>{{ car.modelLine?.name || 'N/A' }}</span>
+            </div>
+            <div class="px-2">
+              <i class="fa fa-road text-primary mr-1"></i>
+              <span>{{ car.mileage || 'N/A' }}</span>
+            </div>
+          </div>
+
+          <!-- Giá xe (nếu có) + nút xem chi tiết -->
+          <button class="btn btn-primary px-3" (click)="goToDetail(car._id)">
+            {{ car.price | currency }}vnđ
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Nút "Xem thêm" chỉ hiển thị nếu số lượng xe hiển thị nhỏ hơn tổng số -->
+    <div class="text-center mt-4" *ngIf="displayedItems < filteredCars.length">
+      <button class="btn btn-primary" (click)="loadMore()">Xem thêm</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rent A Car End -->
+
+
+<!-- Rent A Car End -->
+
+
+<!-- Banner Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row mx-0">
+            <div class="col-lg-6 px-0">
+                <div class="px-5 bg-secondary d-flex align-items-center justify-content-between" style="height: 350px;">
+                    <img class="img-fluid flex-shrink-0 ml-n5 w-50 mr-4" src="assets/img/banner-left.png" alt="">
+                    <div class="text-right">
+                        <h3 class="text-uppercase text-light mb-3">Want to be driver?</h3>
+                        <p class="mb-4">Lorem justo sit sit ipsum eos lorem kasd, kasd labore</p>
+                        <a class="btn btn-primary py-2 px-4" href="">Start Now</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 px-0">
+                <div class="px-5 bg-dark d-flex align-items-center justify-content-between" style="height: 350px;">
+                    <div class="text-left">
+                        <h3 class="text-uppercase text-light mb-3">Looking for a car?</h3>
+                        <p class="mb-4">Lorem justo sit sit ipsum eos lorem kasd, kasd labore</p>
+                        <a class="btn btn-primary py-2 px-4" href="">Start Now</a>
+                    </div>
+                    <img class="img-fluid flex-shrink-0 mr-n5 w-50 ml-4" src="assets/img/banner-right.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner End -->
+
+
+<!-- Vendor Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="owl-carousel vendor-carousel">
+            <div class="bg-light p-4">
+                <img src="assets/img/vendor-1.png" alt="">
+            </div>
+            <div class="bg-light p-4">
+                <img src="assets/img/vendor-2.png" alt="">
+            </div>
+            <div class="bg-light p-4">
+                <img src="assets/img/vendor-3.png" alt="">
+            </div>
+            <div class="bg-light p-4">
+                <img src="assets/img/vendor-4.png" alt="">
+            </div>
+            <div class="bg-light p-4">
+                <img src="assets/img/vendor-5.png" alt="">
+            </div>
+            <div class="bg-light p-4">
+                <img src="assets/img/vendor-6.png" alt="">
+            </div>
+            <div class="bg-light p-4">
+                <img src="assets/img/vendor-7.png" alt="">
+            </div>
+            <div class="bg-light p-4">
+                <img src="assets/img/vendor-8.png" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Vendor End -->

@@ -1,0 +1,28 @@
+.vnpay-container {
+    display: flex;
+    justify-content: center;
+    padding: 50px 0;
+  
+    .vnpay-box {
+      background: #f1f5f9;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  
+      h2 {
+        color: #28a745;
+        font-weight: 700;
+      }
+  
+      p {
+        margin: 0.8rem 0;
+      }
+  
+      button {
+        padding: 10px 20px;
+      }
+    }
+  }
+  

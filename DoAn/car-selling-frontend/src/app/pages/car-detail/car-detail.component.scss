@@ -1,0 +1,154 @@
+.car-detail-template {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+
+  .car-main-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+
+    .car-image {
+      flex: 1;
+      padding-left: 0;
+
+      img {
+        width: 100%;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+    }
+
+    .car-text-info {
+      flex: 1;
+
+      .car-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .car-subtitle {
+        font-size: 1rem;
+        color: #777;
+        margin-bottom: 15px;
+      }
+
+      .car-buttons {
+        margin-bottom: 20px;
+
+        .btn-link {
+          background: none;
+          border: none;
+          color: red;
+          font-weight: 600;
+          cursor: pointer;
+          padding: 0 8px;
+        }
+
+        .divider {
+          color: #aaa;
+        }
+      }
+
+      .car-info-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        margin-bottom: 20px;
+
+        .car-info-item {
+          flex: 1;
+
+          label {
+            font-size: 0.85rem;
+            color: #888;
+          }
+
+          div {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 4px;
+          }
+        }
+        .support-section {
+          .support-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+          }
+        
+          .support-phone {
+            font-size: 1.25rem;
+            color: #007aff;
+            text-decoration: none;
+          }
+        
+          .support-phone:hover {
+            text-decoration: underline;
+          }
+        
+          .support-description {
+            font-size: 1rem;
+          }
+        
+          .support-hours {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+          }
+        
+          .support-box {
+            transition: all 0.3s ease;
+            background: #fff;
+        
+            i {
+              color: #444;
+            }
+        
+            h5 {
+              font-size: 1.1rem;
+            }
+        
+            &:hover {
+              box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+              transform: translateY(-3px);
+            }
+          }
+          .owl-nav {
+            position: absolute;
+            top: 35%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+          
+            .owl-prev, .owl-next {
+              background-color: #fd7e14;
+              color: white;
+              width: 50px;
+              height: 50px;
+              font-size: 26px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 0;
+              cursor: pointer;
+              transition: 0.3s ease;
+            }
+          
+            .owl-prev:hover, .owl-next:hover {
+              background-color: #e76e00;
+            }
+          }
+          
+          .custom-nav-icon {
+            font-size: 26px;
+          }
+          
+        }
+        
+      }
+    }
+  }
+}
+

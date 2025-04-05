@@ -1,0 +1,47 @@
+<div class="checkout-container" *ngIf="car">
+  <h2>Xác nhận đặt xe: {{ car.name }}</h2>
+
+  <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Họ tên khách hàng</label>
+      <input formControlName="customerName" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label>Số điện thoại</label>
+      <input formControlName="customerPhone" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input formControlName="email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label>Địa chỉ</label>
+      <input formControlName="customerAddress" class="form-control" />
+    </div>
+
+    <div class="form-group">
+      <label>Phương thức thanh toán</label>
+      <div class="payment-methods">
+        <label class="payment-card" *ngFor="let method of paymentMethods">
+          <input type="radio" formControlName="method" [value]="method.value" />
+          <div class="payment-content">
+            <img [src]="'assets/img/' + method.image" alt="{{ method.label }}" />
+            <span>{{ method.label | uppercase }}</span>
+          </div>
+        </label>
+      </div>
+    </div>      
+
+    <div class="summary">
+      <label>Tổng tiền:</label>
+      <p>{{ totalAmount | currency:'VND' }}</p>
+    </div>  
+    <div class="btn-group">
+      <button class="btn btn-secondary" type="button" (click)="goBack()">Quay lại</button>
+      <button class="btn btn-primary" type="submit">Tiếp theo</button>
+    </div>    
+  </form>
+</div>

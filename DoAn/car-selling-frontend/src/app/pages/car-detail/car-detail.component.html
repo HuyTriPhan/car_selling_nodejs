@@ -1,0 +1,171 @@
+<meta charset="utf-8">
+    <title>ROYAL CARS - Car Rental HTML Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="assets/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rubik&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Page Header Start -->
+<div class="container-fluid page-header">
+  <h1 class="display-3 text-uppercase text-white mb-3">Car Detail</h1>
+  <div class="d-inline-flex text-white">
+    <h6 class="text-uppercase m-0"><a class="text-white" href="">Home</a></h6>
+    <h6 class="text-body m-0 px-3">/</h6>
+    <h6 class="text-uppercase text-body m-0">Car Detail</h6>
+  </div>
+</div>
+
+<!-- Thêm nút thanh toán ngay dưới thông tin xe -->
+<div class="car-detail-template" *ngIf="car">
+  <div class="car-main-info">
+    <!-- Ảnh bên trái -->
+    <div class="car-image">
+      <img [src]="'http://localhost:5000/uploads/' + car.image" alt="{{ car.name }}" />
+    </div>
+
+    <!-- Thông tin bên phải -->
+    <div class="car-text-info">
+      <h1 class="car-title">{{ car.name }}</h1>
+      <p class="car-subtitle">{{ car.subtitle }}</p>
+
+      <!-- 2 nút hành động -->
+      <div class="car-buttons">
+        <button class="btn-link">XEM THÔNG SỐ</button>
+        <span class="divider">|</span>
+        <button class="btn-link">SO SÁNH XE</button>
+      </div>
+
+      <!-- Dòng 1 -->
+      <div class="car-info-row">
+        <div class="car-info-item">
+          <label>Số chỗ ngồi</label>
+          <div>{{ car.seatCount }}</div>
+        </div>
+        <div class="car-info-item">
+          <label>Kiểu dáng</label>
+          <div>{{ car.modelLine?.name }}</div>
+        </div>
+        <div class="car-info-item">
+          <label>Năm sản xuất</label>
+          <div>{{ car.year }}</div>
+        </div>
+      </div>
+
+      <!-- Dòng 2 -->
+      <div class="car-info-row">
+        <div class="car-info-item">
+          <label>Xuất xứ</label>
+          <div>{{ car.origin }}</div>
+        </div>
+        <div class="car-info-item">
+          <label>Giá từ</label>
+          <div>{{ car.price | currency:'VND' }}</div>
+        </div>
+      </div>
+
+      <!-- Nút Thanh toán ngay -->
+      <div class="car-payment">
+        <button class="btn btn-primary" (click)="goToCheckout(car._id)">Thanh toán ngay</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Related Car Start -->
+<div class="container-fluid pb-5" *ngIf="relatedCars && relatedCars.length">
+  <div class="container pb-5">
+    <h2 class="mb-4">Related Cars</h2>
+    <div class="owl-carousel related-carousel position-relative" style="padding: 0 30px;">
+      <!-- Dynamic rendering giống trang list -->
+      <div class="rent-item" *ngFor="let car of relatedCars">
+        <img
+          class="img-fluid mb-4"
+          [src]="'http://localhost:5000/uploads/' + car.image"
+          alt="{{ car.name }}"
+        />
+        <h4 class="text-uppercase mb-4">{{ car.name }}</h4>
+        <div class="d-flex justify-content-center mb-4">
+          <div class="px-2">
+            <i class="fa fa-car text-primary mr-1"></i>
+            <span>{{ car.year }}</span>
+          </div>
+          <div class="px-2 border-left border-right">
+            <i class="fa fa-cogs text-primary mr-1"></i>
+            <span>{{ car.modelLine?.name || 'N/A' }}</span>
+          </div>
+          <div class="px-2">
+            <i class="fa fa-road text-primary mr-1"></i>
+            <span>{{ car.mileage || 'N/A' }}</span>
+          </div>
+        </div>
+        <a class="btn btn-primary px-3" (click)="goToDetail(car._id)">
+          {{ car.price | currency:'VND' }} / Day
+        </a>
+        <div class="car-payment">
+          <button class="btn btn-primary" (click)="goToCheckout(car._id)">Thanh toán ngay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Related Car End -->
+
+
+<!-- Support Section Start -->
+<div class="container my-5 support-section">
+  <h2 class="text-center fw-bold support-title">
+    Quý khách hàng có thể liên hệ với Mercedes-Benz Việt Nam qua tổng đài:
+  </h2>
+
+  <div class="text-center my-3">
+    <a href="tel:1800400110" class="support-phone fw-bold">1800 400110</a>
+  </div>
+
+  <p class="text-center text-muted mb-4 support-description">
+    Giờ hoạt động của trung tâm chăm sóc khách hàng:
+  </p>
+
+  <ul class="text-muted list-unstyled text-center support-hours">
+    <li>Dịch vụ hỗ trợ 24h (Star Assist 24h)</li>
+    <li>Mua xe & lái thử xe: thứ Hai - thứ Bảy – 8h - 22h</li>
+    <li>Dịch vụ hậu mãi: thứ Hai - thứ Sáu – 8h - 17h</li>
+  </ul>
+
+  <div class="row text-center mt-4">
+    <div class="col-md-4">
+      <div class="support-box border rounded p-3 h-100">
+        <i class="fas fa-phone fa-2x text-dark mb-2"></i>
+        <h5 class="fw-bold mb-1">Liên hệ tư vấn</h5>
+        <p class="text-muted mb-0">Gửi thông tin và nhận tư vấn từ Mercedes-Benz Việt Nam.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="support-box border rounded p-3 h-100">
+        <i class="fas fa-car-side fa-2x text-dark mb-2"></i>
+        <h5 class="fw-bold mb-1">Đăng ký lái thử</h5>
+        <p class="text-muted mb-0">Đặt lịch hẹn lái thử tại Nhà phân phối chính hãng.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="support-box border rounded p-3 h-100">
+        <i class="fas fa-calendar-alt fa-2x text-dark mb-2"></i>
+        <h5 class="fw-bold mb-1">Đặt lịch hẹn dịch vụ</h5>
+        <p class="text-muted mb-0">Đặt lịch kiểm tra trực tuyến để được hưởng những lợi ích thuận tiện nhất.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Support Section End -->
+
+
+

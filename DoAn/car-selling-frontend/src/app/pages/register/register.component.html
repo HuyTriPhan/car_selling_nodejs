@@ -1,0 +1,32 @@
+<div class="auth-container">
+  <h2>Đăng ký tài khoản</h2>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <input type="text" formControlName="name" placeholder="Họ và tên" />
+    <div class="error" *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.invalid">
+      <small>Vui lòng nhập họ tên</small>
+    </div>
+
+    <input type="email" formControlName="email" placeholder="Email" />
+    <div class="error" *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+      <small *ngIf="registerForm.get('email')?.errors?.['required']">Vui lòng nhập email</small>
+      <small *ngIf="registerForm.get('email')?.errors?.['email']">Email không hợp lệ</small>
+    </div>
+
+    <input type="password" formControlName="password" placeholder="Mật khẩu" />
+    <div class="error" *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+      <small *ngIf="registerForm.get('password')?.errors?.['required']">Vui lòng nhập mật khẩu</small>
+      <small *ngIf="registerForm.get('password')?.errors?.['minlength']">Mật khẩu tối thiểu 8 ký tự</small>
+    </div>
+
+    <input type="password" formControlName="confirmPassword" placeholder="Nhập lại mật khẩu mới" />
+    <div class="error" *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched">
+      <small>Mật khẩu xác nhận không khớp</small>
+    </div>
+
+    <button type="submit">Đăng ký</button>
+  </form>
+
+  <p class="switch-text">Đã có tài khoản?</p>
+  <a class="switch-btn" routerLink="/login">Đăng nhập</a>
+</div>

@@ -1,0 +1,37 @@
+<div class="user-list-container">
+    <h2>Danh sách người dùng</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Họ tên</th>
+          <th>Email</th>
+          <th>Vai trò</th>
+          <th>Trạng thái</th>
+          <th>Hành động</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <!-- Giả sử backend trả về trường locked: true/false -->
+            <span *ngIf="user.locked; else active">Bị khóa</span>
+            <ng-template #active>Hoạt động</ng-template>
+          </td>
+          <td>
+            <!-- Nếu user đang hoạt động, hiển thị nút khóa (màu đỏ) -->
+            <button *ngIf="!user.locked" (click)="lockUser(user._id)" class="lock">
+              Khóa tài khoản
+            </button>
+            <!-- Nếu user bị khóa, hiển thị nút mở khóa (màu xanh) -->
+            <button *ngIf="user.locked" (click)="unlockUser(user._id)" class="unlock">
+              Mở khóa
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

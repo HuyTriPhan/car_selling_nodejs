@@ -1,0 +1,41 @@
+.user-list-container {
+    padding: 20px;
+  
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f5f5f5;
+      }
+    }
+  
+    button.lock {
+      background-color: #dc3545; /* Màu đỏ */
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+  
+    button.unlock {
+      background-color: #28a745; /* Màu xanh */
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  }
+  

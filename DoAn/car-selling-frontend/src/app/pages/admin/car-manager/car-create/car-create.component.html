@@ -1,0 +1,41 @@
+<div class="car-create-container">
+    <h2>Thêm xe mới</h2>
+    <form [formGroup]="carForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <label>Tên xe:
+        <input type="text" formControlName="name" placeholder="Nhập tên xe" />
+      </label>
+      <label class="label-large">Dòng xe:
+        <select formControlName="modelLine">
+          <option *ngFor="let line of modelLines" [value]="line._id">
+            {{ line.name }}
+          </option>
+        </select>
+      </label>
+      <label>Giá:
+        <input type="number" formControlName="price" placeholder="Nhập giá" />
+      </label>
+      <label>Năm sản xuất:
+        <input type="number" formControlName="year" placeholder="Nhập năm sản xuất" />
+      </label>
+      <label>Nguồn gốc:
+        <input type="text" formControlName="origin" placeholder="Nhập nguồn gốc" />
+      </label>
+      <label>Số chỗ:
+        <input type="number" formControlName="seatCount" placeholder="Nhập số chỗ" />
+      </label>
+      <label>Mô tả:
+        <textarea formControlName="description" placeholder="Nhập mô tả"></textarea>
+      </label>
+      <!-- Upload ảnh: gọi onFileChange khi thay đổi -->
+      <label>Ảnh:
+        <input type="file" name="image" (change)="onFileChange($event)" />
+      </label>
+      <div class="button-group">
+        <button type="submit" class="btn-submit" [disabled]="!carForm.valid">Lưu</button>
+        <button type="button" class="btn-back" routerLink="/admin/car">
+          Quay lại
+        </button>
+      </div>
+    </form>
+  </div>
+  

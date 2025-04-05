@@ -1,0 +1,71 @@
+<div class="auth-container">
+  <h2>Admin Login</h2>
+
+  <!-- Form reactive: không đổi logic gốc, chỉ bổ sung UI/UX -->
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        formControlName="email"
+        id="email"
+        placeholder="Nhập email"
+      />
+      <!-- Hiển thị lỗi email -->
+      <div
+        class="error"
+        *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+      >
+        <small *ngIf="loginForm.get('email')?.errors?.['required']"
+          >Vui lòng nhập email</small
+        >
+        <small *ngIf="loginForm.get('email')?.errors?.['email']"
+          >Email không hợp lệ</small
+        >
+      </div>
+    </div>
+
+    <!-- Password -->
+    <div class="form-group password-wrapper">
+      <label for="password">Mật khẩu</label>
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        formControlName="password"
+        id="password"
+        placeholder="Nhập mật khẩu"
+      />
+      <i class="toggle-password" (click)="togglePassword()">👁</i>
+      <!-- Hiển thị lỗi password -->
+      <div
+        class="error"
+        *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+      >
+        <small>Vui lòng nhập mật khẩu</small>
+      </div>
+    </div>
+
+    <!-- Check "Keep me signed in" + link Quên mật khẩu -->
+    <div class="form-utility">
+      <div class="keep-signed-in">
+        <input type="checkbox" id="keepMeSignedIn" />
+        <label for="keepMeSignedIn">Keep me signed in</label>
+      </div>
+      <a (click)="onForgotPassword()" class="forgot-password">Forgot Password?</a>
+    </div>
+
+    <!-- Nút đăng nhập -->
+    <button type="submit" class="btn btn-login">Đăng nhập</button>
+
+
+    <!-- Link đăng ký -->
+    <div class="signup-link">
+      <p>Don't have an account? <a routerLink="/register">Sign up</a></p>
+    </div>
+  </form>
+
+  <!-- Hiển thị lỗi chung nếu tài khoản/mật khẩu sai, hoặc lỗi khác trả về từ server -->
+  <div class="error" *ngIf="errorMsg">
+    <small>{{ errorMsg }}</small>
+  </div>
+</div>

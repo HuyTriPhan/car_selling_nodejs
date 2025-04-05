@@ -1,0 +1,21 @@
+<div class="modelline-form-container">
+  <h2>{{ 'Sửa thông tin dòng xe' }}</h2>
+  <form [formGroup]="modellineForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Tên dòng xe:</label>
+      <input id="name" type="text" formControlName="name" placeholder="Nhập tên dòng xe" />
+      <div class="error" *ngIf="modellineForm.get('name')?.touched && modellineForm.get('name')?.invalid">
+        <small>Vui lòng nhập tên dòng xe</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Mô tả:</label>
+      <textarea id="description" formControlName="description" placeholder="Nhập mô tả"></textarea>
+    </div>
+    <div class="button-group">
+      <button type="submit" [disabled]="!modellineForm.valid">
+        {{ 'Lưu thay đổi' }}
+      </button>
+    </div>
+  </form>
+</div>

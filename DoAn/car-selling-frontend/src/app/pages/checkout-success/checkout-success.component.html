@@ -1,0 +1,14 @@
+<div class="vnpay-container" *ngIf="order">
+  <div class="vnpay-box">
+    <h2>Thanh toán thành công!</h2>
+    <p>Đơn hàng của bạn đã được ghi nhận.</p>
+    <hr />
+    <p><strong>Mã đơn hàng:</strong> {{ order._id }}</p>
+    <p><strong>Khách hàng:</strong> {{ order.customerName }}</p>
+    <p><strong>Xe:</strong> {{ order.car.name }}</p>
+    <p><strong>Tổng tiền:</strong> {{ order.totalAmount | currency:'VND' }}</p>
+    <p><strong>Phương thức thanh toán:</strong> {{ order.payment.method | uppercase }}</p>
+
+    <button routerLink="/" class="btn btn-success mt-3">Về trang chủ</button>
+  </div>
+</div>
