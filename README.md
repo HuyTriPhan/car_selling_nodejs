@@ -6,7 +6,8 @@ NHớ mở 2 terminal
 
 2. Frontend
 - cd car-selling-frontend
-- Cần cài lại npm: + Remove-Item -Recurse -Force node_modules, package-lock.json
-                    + npm install
+- Cần cài lại npm: B1 Remove-Item -Recurse -Force node_modules, package-lock.json
+  
+                    B2 npm install
 
   sau đó chạy lệnh: ng serve
