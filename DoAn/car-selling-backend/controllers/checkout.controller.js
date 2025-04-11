@@ -1,6 +1,5 @@
 const Order = require('../models/order.model');
 const Payment = require('../models/payment.model');
-const checkoutService = require('../services/checkout.service');
 
 const createOrder = async (req, res) => {
   try {

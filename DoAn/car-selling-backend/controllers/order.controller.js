@@ -1,18 +1,32 @@
-const orderService = require('../services/order.service');
-const paymentService = require('../services/payment.service');
+const Order = require('../models/order.model');
+const Payment = require('../models/payment.model');
+const uuid = require('uuid');
+const Car = require('../models/car.model'); 
+const { safeDecreaseStock } = require('./car.controller');
 
+// Tạo đơn hàng + tạo payment + cập nhật lại order
 const createOrder = async (req, res) => {
   try {
-    const payment = await paymentService.createPayment({
-      method: req.body.method,
-      status: 'unpaid'
-    });
-
-    const order = await orderService.createOrder({
+    const data = {
       ...req.body,
       user: req.user.userId,
-      payment: payment._id
+      totalAmount: req.body.totalAmount
+    };
+
+    const order = await Order.createOrder(data);
+
+    await safeDecreaseStock(order.car);
+    
+    const payment = await Payment.create({
+      userId: req.user.userId,
+      orderId: order._id,
+      amount: data.totalAmount,
+      vnp_TxnRef: uuid.v4().replace(/-/g, '').substring(0, 8),
+      status: 'pending',
     });
+
+    order.payment = payment._id;
+    await order.save();
 
     res.status(201).json(order);
   } catch (err) {
@@ -20,26 +34,55 @@ const createOrder = async (req, res) => {
   }
 };
 
-
 const getAll = async (req, res) => {
-  const orders = await orderService.getAllOrders();
-  res.json(orders);
+  try {
+    const orders = await Order.getAllOrders();
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 const getById = async (req, res) => {
-  const order = await orderService.getOrderById(req.params.id);
-  if (!order) return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
-  res.json(order);
+  try {
+    const order = await Order.getById(req.params.id);
+    if (!order) return res.status(404).json({ message: 'Không tìm thấy đơn hàng' });
+    res.json(order);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 const update = async (req, res) => {
-  const updated = await orderService.updateOrder(req.params.id, req.body);
-  res.json(updated);
+  try {
+    const updated = await Order.updateById(req.params.id, req.body);
+    res.json(updated);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 };
 
 const remove = async (req, res) => {
-  await orderService.deleteOrder(req.params.id);
-  res.json({ message: 'Đã xoá đơn hàng' });
+  try {
+    await Order.deleteById(req.params.id);
+    res.json({ message: 'Đã xoá đơn hàng' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
-module.exports = { createOrder, getAll, getById, update, remove };
+const getMyOrders = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const orders = await Order.find({ user: userId })
+      .populate({ path: 'car', populate: { path: 'modelLine' } })
+      .populate('payment');
+      
+    res.json(orders);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
+module.exports = { createOrder, getAll, getById, update, remove, getMyOrders };

@@ -1,37 +1,68 @@
 <div class="user-list-container">
+  <div class="header">
     <h2>Danh sách người dùng</h2>
-    <table>
-      <thead>
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Tìm theo tên hoặc email..."
+      class="search-input"
+    />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Họ tên</th>
+        <th>Email</th>
+        <th>Vai trò</th>
+        <th>Trạng thái</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let user of pagedUsers">
         <tr>
-          <th>Họ tên</th>
-          <th>Email</th>
-          <th>Vai trò</th>
-          <th>Trạng thái</th>
-          <th>Hành động</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of users">
           <td>{{ user.name }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.role }}</td>
           <td>
-            <!-- Giả sử backend trả về trường locked: true/false -->
             <span *ngIf="user.locked; else active">Bị khóa</span>
             <ng-template #active>Hoạt động</ng-template>
           </td>
           <td>
-            <!-- Nếu user đang hoạt động, hiển thị nút khóa (màu đỏ) -->
-            <button *ngIf="!user.locked" (click)="lockUser(user._id)" class="lock">
-              Khóa tài khoản
-            </button>
-            <!-- Nếu user bị khóa, hiển thị nút mở khóa (màu xanh) -->
-            <button *ngIf="user.locked" (click)="unlockUser(user._id)" class="unlock">
-              Mở khóa
-            </button>
+            <button *ngIf="!user.locked" (click)="lockUser(user._id)" class="lock">Khóa tài khoản</button>
+            <button *ngIf="user.locked" (click)="unlockUser(user._id)" class="unlock">Mở khóa</button>
+            <button (click)="toggleDetail(user)" class="view">Xem chi tiết</button>
+          </td>
+          
+        </tr>
+    
+        <!-- Chi tiết user (tr cùng vòng lặp) -->
+        <tr *ngIf="selectedUser?._id === user._id" class="user-detail-row">
+          <td colspan="5">
+            <div class="user-detail-card">
+              <p><strong>Họ tên:</strong> {{ selectedUser.name }}</p>
+              <p><strong>Email:</strong> {{ selectedUser.email }}</p>
+              <p><strong>Vai trò:</strong> {{ selectedUser.role }}</p>
+              <p><strong>Số điện thoại:</strong> {{ selectedUser.phone || 'Chưa cập nhật' }}</p>
+              <p><strong>Địa chỉ:</strong> {{ selectedUser.address || 'Chưa cập nhật' }}</p>
+              <p><strong>Ngày sinh:</strong> {{ selectedUser.date | date:'dd/MM/yyyy' }}</p>
+
+            </div>
           </td>
         </tr>
-      </tbody>
-    </table>
+      </ng-container>
+    </tbody>
+    
+  </table>
+
+  <div class="pagination-wrapper" *ngIf="filteredUsers.length > 0">
+    <div class="pagination">
+      <button *ngFor="let page of pageNumbers"
+              (click)="changePage(page)"
+              [class.active]="page === currentPage">
+        {{ page }}
+      </button>
+    </div>
   </div>
-  
+</div>

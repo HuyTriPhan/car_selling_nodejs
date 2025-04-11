@@ -1,0 +1,49 @@
+<div class="order-list-container">
+  <div class="header">
+    <h2>Danh sách Đơn hàng</h2>
+    <div class="search-box">
+      <input [(ngModel)]="searchTerm" type="text" placeholder="Tìm theo tên khách hàng..." />
+      <span class="search-icon">🔍</span>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Mã đơn</th>
+        <th>Khách hàng</th>
+        <th>Phương thức</th>
+        <th>Tổng tiền</th>
+        <th>Ngày đặt</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of pagedOrders">
+        <td>{{ order._id }}</td>
+        <td>{{ order.customerName }}</td>
+        <td>{{ order.method }}</td>
+        <td>
+          <div>{{ order.totalAmount | currencyVND }}</div>
+          <div *ngIf="order.discountAmount">
+            <small class="discount">- Giảm: {{ order.discountAmount | currencyVND }}</small>
+          </div>
+        </td>
+        <td>{{ order.createdAt | date:'dd/MM/yyyy' }}</td>
+        <td class="actions">
+          <button class="btn-delete" (click)="deleteOrder(order._id)">Xoá</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination-wrapper" *ngIf="filteredOrders.length > 0">
+    <div class="pagination">
+      <button *ngFor="let page of pageNumbers"
+              (click)="changePage(page)"
+              [class.active]="page === currentPage">
+        {{ page }}
+      </button>
+    </div>
+  </div>
+</div>

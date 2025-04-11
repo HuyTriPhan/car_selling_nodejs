@@ -5,33 +5,15 @@ const upload = require('../config/multer.config');
 const { authenticate } = require('../middlewares/auth.middleware');
 
 router.post('/register', userController.register);
-
 router.post('/login', userController.login);
 
+router.get('/profile', authenticate, userController.getProfile);
 router.put('/profile', authenticate, upload.single('image'), userController.updateProfile);
+router.put('/password', authenticate, userController.changePassword);
 
-router.get('/', async (req, res) => {
-    try {
-      const users = await require('../models/user.model').find();
-      res.json(users);
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  });
+router.delete('/:id', userController.deleteUser); // hoặc dùng authenticate + isAdmin nếu cần
+router.get('/', userController.getAllUsers);
+router.put('/lock/:id', userController.lockUser);
 
-  router.put('/lock/:id', async (req, res) => {
-    try {
-      const { lock } = req.body; // true = khóa, false = mở khóa
-      const User = require('../models/user.model');
-      const updatedUser = await User.findByIdAndUpdate(
-        req.params.id,
-        { locked: lock },
-        { new: true }
-      );
-      res.json(updatedUser);
-    } catch (err) {
-      res.status(400).json({ message: err.message });
-    }
-  });
 
 module.exports = router;

@@ -39,8 +39,28 @@ export const routes: Routes = [
       {
         path: 'checkout-success/:orderId',
         loadComponent: () => import('./pages/checkout-success/checkout-success.component').then(m => m.CheckoutSuccessComponent)
-      }      
-      
+      },
+      {
+        path: 'invoice',
+        loadComponent: () =>
+          import('./pages/invoice/invoice.component').then(m => m.CheckoutInvoiceComponent)
+      },
+      {
+        path: 'user/info',
+        loadComponent: () =>
+          import('./pages/user/user-info/user-info.component').then(m => m.UserInfoComponent)
+      },
+      {
+        path: 'user/update',
+        loadComponent: () =>
+          import('./pages/user/user-update/user-update.component').then(m => m.UserUpdateComponent)
+      },
+      {
+        path: 'user/orders',
+        loadComponent: () =>
+          import('./pages/user/user-order-history/user-order-history.component').then(m => m.UserOrderHistoryComponent)
+      }
+         
     ],
   },
   // Thêm route cho admin login
@@ -58,8 +78,9 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./layouts/admin-layout/dashboard.component').then((m) => m.DashboardComponent),
-      },
+          import('./layouts/admin-layout/dashboard/dashboard.component')
+            .then((m) => m.DashboardComponent),
+      },   
       {
         path: 'user',
         loadComponent: () =>
@@ -116,6 +137,41 @@ export const routes: Routes = [
           },
         ],
       },
+      {
+        path: 'order',
+        loadComponent: () =>
+          import('./pages/admin/order-manager/OrderManager.Component').then(m => m.OrderManagerComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/admin/order-manager/orderlist/orderlist.component').then(m => m.OrderListComponent),
+          }
+        ]
+      },
+      {
+        path: 'promotion',
+        loadComponent: () =>
+          import('./pages/admin/promotion-manager/promotion-manager.component').then(m => m.PromotionManagerComponent),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./pages/admin/promotion-manager/promotion-list/promotion-list.component').then(m => m.PromotionListComponent),
+          },
+          {
+            path: 'create',
+            loadComponent: () =>
+              import('./pages/admin/promotion-manager/promotion-create/promotion-create.component').then(m => m.PromotionCreateComponent),
+          },
+          {
+            path: 'edit/:id',
+            loadComponent: () =>
+              import('./pages/admin/promotion-manager/promotion-edit/promotion-edit.component').then(m => m.PromotionEditComponent),
+          }
+        ]
+      }
+
     ],
   },
   { path: '**', redirectTo: '', pathMatch: 'full' },

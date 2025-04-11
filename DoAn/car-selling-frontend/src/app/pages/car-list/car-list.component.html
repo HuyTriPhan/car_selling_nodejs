@@ -36,17 +36,14 @@
     <div class="row">
       <!-- Sử dụng slice pipe để chỉ hiển thị từ 0 đến displayedItems -->
       <div class="col-lg-4 col-md-6 mb-2" *ngFor="let car of filteredCars | slice:0:displayedItems">
-        <div class="rent-item mb-4">
-          <!-- Ảnh xe lấy từ backend -->
+        <div class="rent-item mb-4 car-clickable" (click)="goToDetail(car._id)">
           <img
             class="img-fluid mb-4"
             [src]="'http://localhost:5000/uploads/' + car.image"
             alt="{{ car.name }}"
           />
-          <!-- Tên xe -->
           <h4 class="text-uppercase mb-4">{{ car.name }}</h4>
-
-          <!-- Một số thông tin xe (năm, modelLine, mileage, v.v.) -->
+      
           <div class="d-flex justify-content-center mb-4">
             <div class="px-2">
               <i class="fa fa-car text-primary mr-1"></i>
@@ -61,13 +58,13 @@
               <span>{{ car.mileage || 'N/A' }}</span>
             </div>
           </div>
-
-          <!-- Giá xe (nếu có) + nút xem chi tiết -->
-          <button class="btn btn-primary px-3" (click)="goToDetail(car._id)">
-            {{ car.price | currency }}vnđ
-          </button>
+      
+          <div class="text-center font-weight-bold text-primary">
+            <span class="text-dark">Giá:</span> {{ car.price | currencyVND }}
+          </div>                  
         </div>
       </div>
+      
     </div>
     <!-- Nút "Xem thêm" chỉ hiển thị nếu số lượng xe hiển thị nhỏ hơn tổng số -->
     <div class="text-center mt-4" *ngIf="displayedItems < filteredCars.length">

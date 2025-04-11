@@ -1,14 +1,142 @@
-<div class="vnpay-container" *ngIf="order">
-  <div class="vnpay-box">
-    <h2>Thanh toán thành công!</h2>
-    <p>Đơn hàng của bạn đã được ghi nhận.</p>
-    <hr />
-    <p><strong>Mã đơn hàng:</strong> {{ order._id }}</p>
-    <p><strong>Khách hàng:</strong> {{ order.customerName }}</p>
-    <p><strong>Xe:</strong> {{ order.car.name }}</p>
-    <p><strong>Tổng tiền:</strong> {{ order.totalAmount | currency:'VND' }}</p>
-    <p><strong>Phương thức thanh toán:</strong> {{ order.payment.method | uppercase }}</p>
+<!-- Page Header Start -->
+<div class="container-fluid page-header">
+  <h1 class="display-3 text-uppercase text-white mb-3">Xác Nhận Thông Tin Mua Xe</h1>
+  <div class="d-inline-flex text-white">
+    <h6 class="text-uppercase m-0"><a class="text-white" routerLink="/">Trang chủ</a></h6>
+    <h6 class="text-body m-0 px-3">/</h6>
+    <h6 class="text-uppercase text-body m-0">Hoàn Tất Đặt Xe</h6>
+  </div>
+</div>
+<!-- Page Header End -->
 
-    <button routerLink="/" class="btn btn-success mt-3">Về trang chủ</button>
+<!-- Chi tiết xe -->
+<div class="container-fluid pt-5" *ngIf="order?.car">
+  <div class="container pt-5 pb-3">
+    <div class="car-detail-template">
+      <div class="car-main-info">
+        <div class="car-image">
+          <img [src]="'http://localhost:5000/uploads/' + order.car.image" alt="{{ order.car.name }}" />
+        </div>
+        <div class="car-text-info">
+          <h1 class="car-title">{{ order.car.name }}</h1>
+          <p class="car-subtitle">{{ order.car.subtitle }}</p>
+
+          <div class="car-info-row">
+            <div class="car-info-item">
+              <label>Số chỗ ngồi</label>
+              <div>{{ order.car.seatCount }}</div>
+            </div>
+            <div class="car-info-item">
+              <label>Kiểu dáng</label>
+              <div>{{ order.car.modelLine?.name }}</div>
+            </div>
+            <div class="car-info-item">
+              <label>Năm sản xuất</label>
+              <div>{{ order.car.year }}</div>
+            </div>
+          </div>
+
+          <div class="car-info-row">
+            <div class="car-info-item">
+              <label>Xuất xứ</label>
+              <div>{{ order.car.origin }}</div>
+            </div>
+            <div class="car-info-item">
+              <label>Giá gốc</label>
+              <div>{{ order.car.price | currencyVND }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Thông tin đơn hàng -->
+<div class="container-fluid pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <h2 class="mb-4">Thông Tin Mua Xe</h2>
+        <div class="mb-5" *ngIf="order">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td><strong>Mã đơn hàng</strong></td>
+                  <td>{{ order._id }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Khách hàng</strong></td>
+                  <td>{{ order.customerName }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Số điện thoại</strong></td>
+                  <td>{{ order.customerPhone }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Địa chỉ</strong></td>
+                  <td>{{ order.customerAddress }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Email</strong></td>
+                  <td>{{ order.customerEmail }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Xe đã đặt</strong></td>
+                  <td>{{ order.car.name }}</td>
+                </tr>
+                <tr>
+                  <td><strong>Phương thức thanh toán</strong></td>
+                  <td>{{ order.method | uppercase }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Chi tiết giá -->
+        <h2 class="mb-4">Chi Tiết Giá</h2>
+        <div class="mb-5" *ngIf="order">
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td>Giá xe</td>
+                  <td class="text-right">{{ order.car.price | currencyVND }}</td>
+                </tr>
+                <tr>
+                  <td>Phí dịch vụ</td>
+                  <td class="text-right">0 VND</td>
+                </tr>
+                <tr *ngIf="order.discountAmount > 0">
+                  <td>
+                    Khuyến mãi
+                    <span *ngIf="order.promotionCode" class="text-muted">({{ order.promotionCode }})</span>
+                  </td>
+                  <td class="text-right text-success">- {{ order.discountAmount | currencyVND }}</td>
+                </tr>
+                <tr>
+                  <th>Tổng tiền</th>
+                  <th class="text-right text-primary">{{ order.totalAmount | currencyVND }}</th>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Nút hành động -->
+        <div class="d-flex justify-content-between mt-4" *ngIf="order">
+          <button [routerLink]="['/checkout', order.car._id]" class="btn btn-outline-secondary px-4 py-2">← Quay lại</button>
+
+          <button 
+            class="btn btn-success px-4 py-2" 
+            *ngIf="order.method === 'vnpay' && order.payment?.status === 'pending'"
+            (click)="payWithVNPAY()">
+            Xác nhận thanh toán
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -14,6 +14,11 @@
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <!-- jQuery (phải đứng trước Bootstrap JS) -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+    <!-- Bootstrap JS (sau jQuery) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 
 
     <!-- Topbar Start -->
@@ -21,9 +26,6 @@
         <div class="row">
             <div class="col-md-6 text-center text-lg-left mb-2 mb-lg-0">
                 <div class="d-inline-flex align-items-center">
-                    <a class="text-body pr-3" href=""><i class="fa fa-phone-alt mr-2"></i>+012 345 6789</a>
-                    <span class="text-body">|</span>
-                    <a class="text-body px-3" href=""><i class="fa fa-envelope mr-2"></i><p>info&#64;example.com</p></a>
                 </div>
             </div>
             <div class="col-md-6 text-center text-lg-right">
@@ -62,9 +64,9 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                     <div class="navbar-nav ml-auto py-0">
-                        <a href="index.html" class="nav-item nav-link active">TRANG CHỦ</a>
+                        <a routerLink="/" class="nav-item nav-link active">TRANG CHỦ</a>
                         <a routerLink="/list" class="nav-item nav-link">SẢN PHẨM</a>
-                        <a href="service.html" class="nav-item nav-link">DỊCH VỤ</a>
+                        <a routerLink="/" class="nav-item nav-link active">DỊCH VỤ</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-item nav-link"></a>
                         </div>
@@ -75,10 +77,21 @@
 
 
                         <!-- Đăng nhập/Đăng ký hoặc Xin chào + Đăng xuất -->
-                            <ng-container *ngIf="isLoggedIn && userRole === 'user'; else guestBlock">
-                              <span class="nav-item nav-link">{{ userName }}</span>
-                              <a (click)="logout()" class="nav-item nav-link" style="cursor: pointer;">Đăng xuất</a>
-                            </ng-container>
+                        <ng-container *ngIf="isLoggedIn && userRole === 'user'; else guestBlock">
+                            <div class="nav-item dropdown">
+                              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+                                 aria-haspopup="true" aria-expanded="false">
+                                {{ userName }}
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" routerLink="/user/info">Thông tin tài khoản</a>
+                                <a class="dropdown-item" routerLink="/user/orders">Lịch sử thanh toán</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" (click)="logout()" style="cursor: pointer;">Đăng xuất</a>
+                              </div>
+                            </div>
+                          </ng-container>
+                          
                             <ng-template #guestBlock>
                               <a routerLink="/login" class="nav-item nav-link">Đăng nhập</a>
                               <a routerLink="/register" class="nav-item nav-link">Đăng ký</a>
@@ -143,7 +156,7 @@
 
             <!-- Nút search -->
             <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-                <button class="btn btn-primary btn-block mb-3" type="submit" style="height: 50px;">Search</button>
+                <button class="btn btn-primary btn-block mb-3" type="submit" style="height: 50px;">Tìm kiếm</button>
             </div>
             </div>
         </div>
@@ -228,5 +241,7 @@
 
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    <!-- Bootstrap JS Bundle (dropdown cần cái này để hoạt động) -->
+
 
 

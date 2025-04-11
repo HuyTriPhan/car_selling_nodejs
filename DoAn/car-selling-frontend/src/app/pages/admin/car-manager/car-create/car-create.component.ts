@@ -33,6 +33,7 @@ export class CarCreateComponent implements OnInit {
       year: [''],
       origin: [''],
       seatCount: [''],
+      stock: [1, Validators.required],
       description: ['']
       // Ảnh không dùng formControl vì sẽ được gửi qua FormData
     });
@@ -59,6 +60,7 @@ export class CarCreateComponent implements OnInit {
       formData.append('year', this.carForm.get('year')?.value);
       formData.append('origin', this.carForm.get('origin')?.value);
       formData.append('seatCount', this.carForm.get('seatCount')?.value);
+      formData.append('stock', this.carForm.get('stock')?.value);
       formData.append('description', this.carForm.get('description')?.value);
       if (this.fileToUpload) {
         formData.append('image', this.fileToUpload);

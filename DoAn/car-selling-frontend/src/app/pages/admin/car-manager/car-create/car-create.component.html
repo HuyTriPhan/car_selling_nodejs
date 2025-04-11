@@ -12,17 +12,20 @@
         </select>
       </label>
       <label>Giá:
-        <input type="number" formControlName="price" placeholder="Nhập giá" />
+        <input type="number" formControlName="price" min="0" placeholder="Nhập giá" />
       </label>
       <label>Năm sản xuất:
-        <input type="number" formControlName="year" placeholder="Nhập năm sản xuất" />
+        <input type="number" formControlName="year" min="0" placeholder="Nhập năm sản xuất" />
       </label>
       <label>Nguồn gốc:
-        <input type="text" formControlName="origin" placeholder="Nhập nguồn gốc" />
+        <input type="text" formControlName="origin"  placeholder="Nhập nguồn gốc" />
       </label>
       <label>Số chỗ:
-        <input type="number" formControlName="seatCount" placeholder="Nhập số chỗ" />
+        <input type="number" formControlName="seatCount" min="0" placeholder="Nhập số chỗ" />
       </label>
+      <label>Số lượng:
+        <input type="number" formControlName="stock" min="0" placeholder="Nhập số lượng" />
+      </label>      
       <label>Mô tả:
         <textarea formControlName="description" placeholder="Nhập mô tả"></textarea>
       </label>

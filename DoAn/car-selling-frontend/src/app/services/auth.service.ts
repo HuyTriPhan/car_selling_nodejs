@@ -10,6 +10,8 @@ const API = 'http://localhost:5000/api/users';
 export class AuthService {
   private isLoggedInSubject = new BehaviorSubject<boolean>(this.hasToken());
   isLoggedIn$ = this.isLoggedInSubject.asObservable();
+  private userSubject = new BehaviorSubject<any>(this.getUser());
+  user$ = this.userSubject.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -55,6 +57,7 @@ export class AuthService {
   saveUser(user: any) {
     if (this.isBrowser()) {
       localStorage.setItem('user', JSON.stringify(user));
+      this.userSubject.next(user);
     }
   }
 
@@ -84,6 +87,7 @@ export class AuthService {
       localStorage.removeItem('role');
       localStorage.removeItem('user');
       this.isLoggedInSubject.next(false);
+      this.userSubject.next(null);
     }
   }
   

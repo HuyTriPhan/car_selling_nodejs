@@ -2,9 +2,17 @@
   <!-- Tiêu đề và nút thêm xe -->
   <div class="header">
     <h2>Danh sách Xe</h2>
+    <div class="search-box">
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        placeholder="Tìm theo tên xe..."
+      />
+      <i class="fa fa-search search-icon"></i>
+    </div>
     <button class="btn-add" routerLink="/admin/car/create">+ Thêm xe</button>
   </div>
-
+  
   <table>
     <thead>
       <tr>
@@ -13,17 +21,19 @@
         <th>Giá</th>
         <th>Năm sản xuất</th>
         <th>Số ghế</th>
+        <th>Số lượng</th>
         <th>Ảnh</th>
         <th>Hành động</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let car of cars">
+      <tr *ngFor="let car of pagedCars">
         <td>{{ car.name }}</td>
         <td>{{ car.modelLine?.name }}</td>
-        <td>{{ car.price | currency }}</td>
+        <td>{{ car.price | currencyVND }}</td>
         <td>{{ car.year }}</td>
         <td>{{ car.seatCount }}</td>
+        <td>{{ car.stock }}</td>
         <td>
           <img
             [src]="'http://localhost:5000/uploads/' + car.image"
@@ -42,4 +52,14 @@
       </tr>
     </tbody>
   </table>
+  <div class="pagination-wrapper" *ngIf="cars && cars.length > 0">
+    <div class="pagination">
+      <button *ngFor="let page of pageNumbers"
+              (click)="changePage(page)"
+              [class.active]="page === currentPage">
+        {{ page }}
+      </button>
+    </div>
+  </div>
+  
 </div>

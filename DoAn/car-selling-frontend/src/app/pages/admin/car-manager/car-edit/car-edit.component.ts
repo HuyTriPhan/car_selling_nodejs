@@ -53,6 +53,7 @@ export class CarEditComponent implements OnInit {
         year: [car.year],
         origin: [car.origin],
         seatCount: [car.seatCount],
+        stock: [car.stock, Validators.required],
         description: [car.description],
       });
       // Lưu lại tên ảnh hiện có
@@ -77,6 +78,7 @@ export class CarEditComponent implements OnInit {
       formData.append('year', this.carForm.get('year')?.value);
       formData.append('origin', this.carForm.get('origin')?.value);
       formData.append('seatCount', this.carForm.get('seatCount')?.value);
+      formData.append('stock', this.carForm.get('stock')?.value);
       formData.append('description', this.carForm.get('description')?.value);
       if (this.fileToUpload) {
         formData.append('image', this.fileToUpload);

@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CarService } from '../../services/car.service';
 import { AuthService } from '../../services/auth.service';
+import { CurrencyVndPipe } from '../../pipes/currency-vnd.pipe';
 
 declare var $: any;
 
 @Component({
   selector: 'app-car-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CurrencyVndPipe],
   templateUrl: './car-detail.component.html',
   styleUrls: ['./car-detail.component.scss']
 })
@@ -97,11 +98,17 @@ export class CarDetailComponent implements OnInit, AfterViewInit {
   }
 
   goToCheckout(carId: string): void {
+    if (this.car?.stock <= 0) {
+      alert('Xe đã hết hàng, không thể thanh toán!');
+      return;
+    }
+  
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/checkout', carId]);
     } else {
       this.router.navigate(['/login']);
     }
   }
+  
      
 }

@@ -1,0 +1,52 @@
+<div class="update-container" *ngIf="user">
+    <h2>Cập nhật thông tin cá nhân</h2>
+  
+    <div class="form-avatar">
+      <img
+        [src]="imagePreview || (user.image ? 'http://localhost:5000/uploads/' + user.image : 'assets/img/default-avatar.png')"
+        alt="Avatar"
+        class="avatar"
+      />
+      <input type="file" (change)="onImageChange($event)" />
+    </div>
+  
+    <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+      <div class="form-group">
+        <label>Họ tên</label>
+        <input type="text" formControlName="name" />
+      </div>
+      <div class="form-group">
+        <label>Số điện thoại</label>
+        <input type="text" formControlName="phone" />
+      </div>
+      <div class="form-group">
+        <label>Địa chỉ</label>
+        <input type="text" formControlName="address" />
+      </div>
+      <div class="form-group">
+        <label>Ngày sinh</label>
+        <input type="date" formControlName="date" />
+      </div>
+  
+      <button type="submit">Lưu thay đổi</button>
+    </form>
+  
+    <h2 class="mt-5">Đổi mật khẩu</h2>
+        <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+        <div class="form-group">
+            <label>Mật khẩu cũ</label>
+            <input type="password" formControlName="oldPassword" />
+        </div>
+        <div class="form-group">
+            <label>Mật khẩu mới</label>
+            <input type="password" formControlName="newPassword" />
+        </div>
+        <div class="form-group">
+            <label>Nhập lại mật khẩu mới</label>
+            <input type="password" formControlName="confirmPassword" />
+        </div>
+        <button type="submit"> Đổi mật khẩu</button>
+        </form>
+
+  </div>
+  

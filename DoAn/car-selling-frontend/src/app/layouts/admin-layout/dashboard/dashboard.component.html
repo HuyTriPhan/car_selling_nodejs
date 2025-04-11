@@ -1,0 +1,19 @@
+<h2 class="dashboard-title">Tổng quát</h2>
+<div class="dashboard-grid">
+  <div class="card user-card">
+    <p class="label">Số người dùng</p>
+    <p class="value">{{ userCount }}</p>
+  </div>
+  <div class="card order-card">
+    <p class="label">Số đơn hàng</p>
+    <p class="value">{{ orderCount }}</p>
+  </div>
+  <div class="card income-card">
+    <p class="label">Tổng thu nhập</p>
+    <p class="value">{{ totalIncome | number }} đ</p>
+  </div>
+  <div class="card car-card">
+    <p class="label">Số xe còn lại</p>
+    <p class="value">{{ carStock }}</p>
+  </div>
+</div>

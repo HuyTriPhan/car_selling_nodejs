@@ -18,4 +18,25 @@ export class UserService {
     // Gửi dữ liệu lock: true để khóa, false để mở khóa
     return this.http.put(`${this.API}/lock/${id}`, { lock });
   }
+  getProfile(): Observable<any> {
+    const token = localStorage.getItem('token') || '';
+    return this.http.get(`${this.API}/profile`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+  
+  updateProfile(formData: FormData): Observable<any> {
+    const token = localStorage.getItem('token') || '';
+    return this.http.put(`${this.API}/profile`, formData, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+  
+  changePassword(data: any): Observable<any> {
+    const token = localStorage.getItem('token') || '';
+    return this.http.put(`${this.API}/password`, data, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+  }
+  
 }

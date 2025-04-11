@@ -1,32 +1,40 @@
 <div class="modelline-list-container">
-    <!-- Tiêu đề và nút thêm dòng xe -->
-    <div class="header">
-      <h2>Danh sách Dòng Xe</h2>
-      <button class="btn-add" routerLink="/admin/modelline/create">+ Thêm dòng xe</button>
+  <div class="header">
+    <h2>Danh sách Dòng Xe</h2>
+    <div class="search-box">
+      <input [(ngModel)]="searchTerm" type="text" placeholder="Tìm theo tên dòng xe..." />
+      <span class="search-icon">🔍</span>
     </div>
-  
-    <table>
-      <thead>
-        <tr>
-          <th>Tên dòng xe</th>
-          <th>Mô tả</th>
-          <th>Hành động</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let line of modellines">
-          <td>{{ line.name }}</td>
-          <td>{{ line.description }}</td>
-          <td class="actions">
-            <button class="btn-edit" [routerLink]="['/admin/modelline/edit', line._id]">
-              Sửa
-            </button>
-            <button class="btn-delete" (click)="deleteModelLine(line._id)">
-              Xoá
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <button class="btn-add" routerLink="/admin/modelline/create">+ Thêm dòng xe</button>
   </div>
-  
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tên dòng xe</th>
+        <th>Mô tả</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let line of pagedModelLines">
+        <td>{{ line.name }}</td>
+        <td>{{ line.description }}</td>
+        <td class="actions">
+          <button class="btn-edit" [routerLink]="['/admin/modelline/edit', line._id]">Sửa</button>
+          <button class="btn-delete" (click)="deleteModelLine(line._id)">Xoá</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination-wrapper" *ngIf="filteredModelLines.length > 0">
+    <div class="pagination">
+      <button *ngFor="let page of pageNumbers"
+              (click)="changePage(page)"
+              [class.active]="page === currentPage">
+        {{ page }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { CarService } from '../../services/car.service';
+import { CurrencyVndPipe } from '../../pipes/currency-vnd.pipe';
 
 @Component({
   selector: 'app-car-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,CurrencyVndPipe],
   templateUrl: './car-list.component.html',
   styleUrls: ['./car-list.component.scss']
 })

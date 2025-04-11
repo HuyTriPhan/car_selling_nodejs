@@ -7,32 +7,50 @@
 
     <ul class="sidebar-nav">
       <li>
-        <a routerLink="/admin">
-          <i class="ti ti-dashboard"></i>
+        <a routerLink="/admin" routerLinkActive="active">
+          <i class="fas fa-tachometer-alt"></i>
           <span *ngIf="!isSidebarCollapsed">Dashboard</span>
         </a>
       </li>
+    
       <li class="caption" *ngIf="!isSidebarCollapsed">Pages</li>
-      <!-- Nút quản lý người dùng -->
+    
       <li>
         <a routerLink="/admin/user" routerLinkActive="active">
-          <i class="ti ti-user"></i>
+          <i class="fas fa-users"></i>
           <span *ngIf="!isSidebarCollapsed">Quản lý người dùng</span>
         </a>
       </li>
+    
       <li>
         <a routerLink="/admin/car" routerLinkActive="active">
-          <i class="ti ti-car"></i>
+          <i class="fas fa-car"></i>
           <span *ngIf="!isSidebarCollapsed">Quản lý xe</span>
         </a>
       </li>
+    
       <li>
         <a routerLink="/admin/modelline" routerLinkActive="active">
-          <i class="ti ti-car"></i>
+          <i class="fas fa-list-alt"></i>
           <span *ngIf="!isSidebarCollapsed">Quản lý dòng xe</span>
         </a>
       </li>
+    
+      <li>
+        <a routerLink="/admin/order" routerLinkActive="active">
+          <i class="fas fa-shopping-cart"></i>
+          <span *ngIf="!isSidebarCollapsed">Quản lý đơn hàng</span>
+        </a>
+      </li>
+    
+      <li>
+        <a routerLink="/admin/promotion" routerLinkActive="active">
+          <i class="fas fa-percent"></i>
+          <span *ngIf="!isSidebarCollapsed">Quản lý khuyến mãi</span>
+        </a>
+      </li>
     </ul>
+    
 
     <div class="sidebar-toggle" (click)="toggleSidebar()">
       <i class="ti ti-chevrons-left"></i>

@@ -1,0 +1,108 @@
+.order-list-container {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .search-box {
+      position: relative;
+
+      input {
+        padding: 0.5rem 2rem 0.5rem 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 280px;
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #888;
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+
+    thead {
+      background: #f5f5f5;
+
+      th {
+        padding: 0.75rem;
+        text-align: left;
+        font-weight: 600;
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid #e0e0e0;
+
+        &:hover {
+          background: #fafafa;
+        }
+
+        td {
+          padding: 0.75rem;
+        }
+
+        .actions {
+          .btn-delete {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 6px 12px;
+            cursor: pointer;
+
+            &:hover {
+              background-color: #d32f2f;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pagination-wrapper {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+
+    .pagination {
+      display: flex;
+      gap: 8px;
+
+      button {
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+
+        &.active,
+        &:hover {
+          background-color: #1976d2;
+          color: #fff;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

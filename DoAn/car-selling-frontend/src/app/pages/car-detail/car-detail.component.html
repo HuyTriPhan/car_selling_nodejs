@@ -37,13 +37,6 @@
       <h1 class="car-title">{{ car.name }}</h1>
       <p class="car-subtitle">{{ car.subtitle }}</p>
 
-      <!-- 2 nút hành động -->
-      <div class="car-buttons">
-        <button class="btn-link">XEM THÔNG SỐ</button>
-        <span class="divider">|</span>
-        <button class="btn-link">SO SÁNH XE</button>
-      </div>
-
       <!-- Dòng 1 -->
       <div class="car-info-row">
         <div class="car-info-item">
@@ -68,14 +61,28 @@
         </div>
         <div class="car-info-item">
           <label>Giá từ</label>
-          <div>{{ car.price | currency:'VND' }}</div>
+          <div>{{ car.price | currencyVND }}</div>
         </div>
       </div>
-
+      <div class="car-info-row">
+        <div class="car-info-item">
+          <label>Số lượng còn lại</label>
+          <div>{{ car.stock || 0 }}</div>
+        </div>
+      </div>
       <!-- Nút Thanh toán ngay -->
       <div class="car-payment">
-        <button class="btn btn-primary" (click)="goToCheckout(car._id)">Thanh toán ngay</button>
+        <button 
+          class="btn btn-primary" 
+          [disabled]="car?.stock <= 0"
+          (click)="goToCheckout(car._id)">
+          Thanh toán ngay
+        </button>
+        <div *ngIf="car?.stock <= 0" class="text-danger mt-2">
+          Xe đã hết hàng
+        </div>
       </div>
+      
     </div>
   </div>
 </div>
@@ -86,14 +93,24 @@
   <div class="container pb-5">
     <h2 class="mb-4">Related Cars</h2>
     <div class="owl-carousel related-carousel position-relative" style="padding: 0 30px;">
-      <!-- Dynamic rendering giống trang list -->
-      <div class="rent-item" *ngFor="let car of relatedCars">
+      
+      <div 
+        class="rent-item" 
+        *ngFor="let car of relatedCars" 
+        (click)="goToDetail(car._id)" 
+        style="cursor: pointer;"
+      >
+        <!-- Ảnh xe -->
         <img
           class="img-fluid mb-4"
           [src]="'http://localhost:5000/uploads/' + car.image"
           alt="{{ car.name }}"
         />
+
+        <!-- Tên xe -->
         <h4 class="text-uppercase mb-4">{{ car.name }}</h4>
+
+        <!-- Thông tin nhanh -->
         <div class="d-flex justify-content-center mb-4">
           <div class="px-2">
             <i class="fa fa-car text-primary mr-1"></i>
@@ -108,17 +125,18 @@
             <span>{{ car.mileage || 'N/A' }}</span>
           </div>
         </div>
-        <a class="btn btn-primary px-3" (click)="goToDetail(car._id)">
-          {{ car.price | currency:'VND' }} / Day
-        </a>
-        <div class="car-payment">
-          <button class="btn btn-primary" (click)="goToCheckout(car._id)">Thanh toán ngay</button>
+
+        <!-- Giá xe -->
+        <div class="text-center font-weight-bold text-primary">
+          Giá: {{ car.price | currencyVND }}
         </div>
       </div>
+
     </div>
   </div>
 </div>
 <!-- Related Car End -->
+
 
 
 <!-- Support Section Start -->

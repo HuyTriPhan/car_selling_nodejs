@@ -84,6 +84,46 @@
       display: flex;
       gap: 1rem;
     }
+
+    .table-confirm, .table-pricing {
+      th, td {
+        vertical-align: middle;
+      }
+      .text-right {
+        text-align: right;
+      }
+    }
+    .total-row {
+      background-color: #f9f9f9;
+      font-weight: bold;
+    }
+    .payment-logo {
+      height: 36px;
+      margin-right: 8px;
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .btn-apply {
+      background-color: #fd7e14;
+      color: white;
+      border: none;
+      padding: 0.55rem 1.25rem;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: 0.3s;
+    
+      &:hover {
+        background-color: #e86f0f;
+      }
+    }
+    
+    .ml-2 {
+      margin-left: 0.5rem;
+    }
+    
     
   }
   

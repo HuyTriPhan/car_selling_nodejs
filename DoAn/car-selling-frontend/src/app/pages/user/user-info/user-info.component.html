@@ -1,0 +1,45 @@
+<div class="info-container" *ngIf="user">
+  <h2 class="title">
+    <i class="fas fa-user text-primary"></i> Thông tin cá nhân
+  </h2>
+
+  <div class="info-card">
+    <div class="avatar-section">
+      <img
+        [src]="user.image ? 'http://localhost:5000/uploads/' + user.image : 'assets/img/avatar.png'"
+        alt="Avatar"
+        class="avatar"
+      />
+    </div>
+
+    <div class="info-section">
+      <div class="info-row">
+        <div><strong>Họ tên:</strong></div>
+        <div>{{ user.name }}</div>
+      </div>
+      <div class="info-row">
+        <div><strong>Email:</strong></div>
+        <div>{{ user.email }}</div>
+      </div>
+      <div class="info-row">
+        <div><strong>Điện thoại:</strong></div>
+        <div>{{ user.phone || 'Chưa cập nhật' }}</div>
+      </div>
+      <div class="info-row">
+        <div><strong>Địa chỉ:</strong></div>
+        <div>{{ user.address || 'Chưa cập nhật' }}</div>
+      </div>
+      <div class="info-row">
+        <div><strong>Ngày sinh:</strong></div>
+        <div>
+          <span *ngIf="user.date; else noDate">
+            {{ user.date | date: 'dd/MM/yyyy' }}
+          </span>
+          <ng-template #noDate>Chưa cập nhật</ng-template>
+        </div>
+      </div>
+
+      <a routerLink="/user/update" class="btn-edit">Cập nhật thông tin</a>
+    </div>
+  </div>
+</div>

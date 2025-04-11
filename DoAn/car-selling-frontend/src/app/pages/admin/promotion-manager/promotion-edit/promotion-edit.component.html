@@ -1,0 +1,22 @@
+<div class="promotion-edit-container" *ngIf="promoForm">
+  <h2>Sửa mã khuyến mãi</h2>
+  <form [formGroup]="promoForm" (ngSubmit)="onSubmit()">
+    <label>Tên khuyến mãi:
+      <input type="text" formControlName="name" placeholder="Nhập tên khuyến mãi" />
+    </label>
+    <label>Giảm giá (%):
+      <input type="number" formControlName="discount" min="0" placeholder="Nhập % giảm giá" />
+    </label>
+    <label>Mô tả:
+      <textarea formControlName="description" placeholder="Nhập mô tả"></textarea>
+    </label>
+    <label>Hạn sử dụng:
+      <input type="date" formControlName="expiredAt" />
+    </label>
+
+    <div class="button-group">
+      <button type="submit" class="btn-submit" [disabled]="!promoForm.valid">Lưu thay đổi</button>
+      <button type="button" class="btn-back" routerLink="/admin/promotion">Quay lại</button>
+    </div>
+  </form>
+</div>

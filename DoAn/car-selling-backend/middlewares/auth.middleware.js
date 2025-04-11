@@ -6,7 +6,7 @@ const authenticate = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded; // gắn thông tin userId, email vào request
+    req.user = decoded; // cần đảm bảo token chứa trường _id (userId) và role
     next();
   } catch (err) {
     return res.status(401).json({ message: 'Token không hợp lệ' });

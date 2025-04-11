@@ -1,0 +1,35 @@
+<div class="order-history" *ngIf="orders.length > 0; else noOrders">
+    <h2 class="title">🧾 Lịch sử mua hàng</h2>
+  
+    <div *ngFor="let order of orders" class="order-card">
+      <div class="order-header">
+        <div><strong>Mã đơn:</strong> {{ order._id }}</div>
+        <div><strong>Ngày:</strong> {{ order.createdAt | date:'dd/MM/yyyy HH:mm' }}</div>
+      </div>
+  
+      <div class="order-body">
+        <div class="car-info">
+          <img class="car-img" [src]="'http://localhost:5000/uploads/' + order.car.image" alt="Car Image" />
+          <div class="car-details">
+            <div><strong>Xe:</strong> {{ order.car.name }}</div>
+            <div><strong>Giá:</strong> {{ order.car.price | currencyVND }}</div>
+          </div>
+        </div>
+        <div class="payment-info">
+          <div><strong>Phương thức:</strong> {{ order.method | uppercase }}</div>
+          <div><strong>Tổng tiền:</strong> {{ order.totalAmount | currencyVND }}</div>
+        </div>
+      </div>
+  
+      <div class="order-actions">
+        <a [routerLink]="['/invoice']" [queryParams]="{ orderId: order._id }" class="btn-view">
+          📋 Xem hóa đơn
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #noOrders>
+    <p class="text-center">Bạn chưa có đơn hàng nào.</p>
+  </ng-template>
+  

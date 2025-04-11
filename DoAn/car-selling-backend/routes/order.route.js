@@ -4,6 +4,7 @@ const controller = require('../controllers/order.controller');
 const { authenticate, authorize } = require('../middlewares/auth.middleware');
 
 router.post('/', authenticate, controller.createOrder);
+router.get('/my', authenticate, controller.getMyOrders);
 router.get('/', authenticate, authorize('admin'), controller.getAll);
 router.get('/:id', authenticate, controller.getById);
 router.put('/:id', authenticate, controller.update);

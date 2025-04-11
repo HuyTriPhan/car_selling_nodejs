@@ -1,0 +1,50 @@
+<div class="promotion-list-container">
+  <div class="header">
+    <h2>Danh sách khuyến mãi</h2>
+    <div class="search-box">
+      <input [(ngModel)]="searchTerm" type="text" placeholder="Tìm theo tên khuyến mãi..." />
+      <span class="search-icon">🔍</span>
+    </div>
+    <button class="btn-add" routerLink="/admin/promotion/create">+ Thêm mã</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tên</th>
+        <th>Mã</th>
+        <th>Giảm (%)</th>
+        <th>Hết hạn</th>
+        <th>Trạng thái</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let promo of pagedPromotions">
+        <td>{{ promo.name }}</td>
+        <td>{{ promo.code }}</td>
+        <td>{{ promo.discount }}%</td>
+        <td>{{ promo.expiredAt | date:'dd/MM/yyyy' }}</td>
+        <td>
+          <span *ngIf="promo.used">Đã sử dụng</span>
+          <span *ngIf="!promo.used && !promo.active">Hết hạn</span>
+          <span *ngIf="!promo.used && promo.active">Còn hạn</span>
+        </td>
+        <td class="actions">
+          <button class="btn-edit" [routerLink]="['/admin/promotion/edit', promo._id]">Sửa</button>
+          <button class="btn-delete" (click)="deletePromo(promo._id)">Xoá</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination-wrapper" *ngIf="filteredPromotions.length > 0">
+    <div class="pagination">
+      <button *ngFor="let page of pageNumbers"
+              (click)="changePage(page)"
+              [class.active]="page === currentPage">
+        {{ page }}
+      </button>
+    </div>
+  </div>
+</div>

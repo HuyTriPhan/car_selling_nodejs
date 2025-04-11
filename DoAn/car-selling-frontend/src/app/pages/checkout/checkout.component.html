@@ -23,6 +23,18 @@
     </div>
 
     <div class="form-group">
+      <label>Mã khuyến mãi</label>
+      <div class="d-flex align-items-center">
+        <input class="form-control" formControlName="promoCode" placeholder="Nhập mã giảm giá" />
+        <button type="button" class="btn-apply ml-2" (click)="applyPromotion()">Áp dụng</button>
+      </div>
+      <small *ngIf="promoMessage" [ngClass]="{ 'text-success': promoValid, 'text-danger': !promoValid }">
+        {{ promoMessage }}
+      </small>
+    </div>    
+
+
+    <div class="form-group">
       <label>Phương thức thanh toán</label>
       <div class="payment-methods">
         <label class="payment-card" *ngFor="let method of paymentMethods">
@@ -37,11 +49,23 @@
 
     <div class="summary">
       <label>Tổng tiền:</label>
-      <p>{{ totalAmount | currency:'VND' }}</p>
-    </div>  
-    <div class="btn-group">
+      <div>
+        <p *ngIf="promoValid">
+          <span class="text-muted text-decoration-line-through">{{ car?.price | currencyVND }}</span>
+          <br />
+          <span class="text-success">- {{ discountAmount | currencyVND }}</span>
+          <br />
+          <strong>{{ totalAmount | currencyVND }}</strong>
+        </p>
+        <p *ngIf="!promoValid">{{ totalAmount | currencyVND }}</p>
+      </div>
+    </div>
+    
+    <!-- ✅ Thêm lại phần nút điều hướng bên ngoài -->
+    <div class="btn-group mt-3">
       <button class="btn btn-secondary" type="button" (click)="goBack()">Quay lại</button>
       <button class="btn btn-primary" type="submit">Tiếp theo</button>
-    </div>    
+    </div>
+    
   </form>
 </div>

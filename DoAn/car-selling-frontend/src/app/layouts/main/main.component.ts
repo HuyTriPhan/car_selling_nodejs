@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { Router, NavigationEnd } from '@angular/router';
-import { CommonModule, NgIf, NgTemplateOutlet } from '@angular/common';
+import { CommonModule, NgIf, NgTemplateOutlet, isPlatformBrowser } from '@angular/common';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { CarService } from '../../services/car.service';
@@ -10,7 +10,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-main',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet, NgIf, FormsModule], 
+  imports: [CommonModule, RouterModule, RouterOutlet, NgIf, FormsModule],
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
 })
@@ -19,33 +19,50 @@ export class MainComponent implements OnInit {
   userName = '';
   userRole = '';
 
-  // Điều chỉnh phạm vi giá từ 1 tỷ đến 10 tỷ
-  minPrice: number = 1000000000;      
-  maxPrice: number = 10000000000;  
-  priceRange: number = 1000000000;  // Mức giá mặc định 1 tỷ
+  minPrice: number = 1000000000;
+  maxPrice: number = 10000000000;
+  priceRange: number = 1000000000;
   modelLines: any[] = [];
 
-  constructor(private auth: AuthService, private router: Router, private carService: CarService) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private carService: CarService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
-    this.router.events.pipe(filter(event => event instanceof NavigationEnd)).subscribe(() => {
-      this.isLoggedIn = this.auth.isLoggedIn();
+    if (isPlatformBrowser(this.platformId)) {
+      // ✅ Gán lại giá trị từ localStorage ngay lập tức khi component khởi tạo
       const user = this.auth.getUser();
-      this.userName = user?.username || user?.name || '';
-      this.userRole = user?.role || '';
-    });
-    this.carService.getAllModelLines().subscribe({
-      next: (data) => (this.modelLines = data),
-      error: (err) => console.error('Lỗi lấy dòng xe:', err),
-    });
+      if (user) {
+        this.isLoggedIn = this.auth.isLoggedIn();
+        this.userName = user?.username || user?.name || '';
+        this.userRole = user?.role || '';
+      }
+
+      // ✅ Gán lại nếu có thay đổi router
+      this.router.events
+        .pipe(filter(event => event instanceof NavigationEnd))
+        .subscribe(() => {
+          const user = this.auth.getUser();
+          this.isLoggedIn = this.auth.isLoggedIn();
+          this.userName = user?.username || user?.name || '';
+          this.userRole = user?.role || '';
+        });
+
+      // ✅ Gọi API lấy dòng xe
+      this.carService.getAllModelLines().subscribe({
+        next: (data) => (this.modelLines = data),
+        error: (err) => console.error('Lỗi lấy dòng xe:', err),
+      });
+    }
   }
 
   updatePriceRange(): void {
-    // Đảm bảo minPrice luôn nhỏ hơn maxPrice
     if (this.priceRange < this.minPrice) {
       this.priceRange = this.minPrice;
     }
-
     if (this.priceRange > this.maxPrice) {
       this.priceRange = this.maxPrice;
     }
@@ -54,7 +71,7 @@ export class MainComponent implements OnInit {
   logout() {
     this.auth.logout();
     this.router.navigate(['/']).then(() => {
-      window.location.reload(); 
+      window.location.reload();
     });
   }
 
@@ -64,8 +81,8 @@ export class MainComponent implements OnInit {
         name: formData.name,
         modelLine: formData.modelLine,
         seats: formData.seats,
-        priceRange: formData.priceRange // Truyền giá trị priceRange vào query params
-      }
+        priceRange: formData.priceRange,
+      },
     });
   }
 }
